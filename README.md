@@ -1,24 +1,9 @@
-# Atlas
-backend-core
-🔧 Contiene:
+# Backend Core
 
-API central (Node.js, Go, o Python FastAPI)
+### Overview
+This repository contains the central backend infrastructure for the Hybrid Influence Platform. It manages agent registration, campaign creation, task assignment, and secure communication between modules. Built for scalability and modularity, it serves as the brain of the system.
 
-Gestión de campañas, agentes, tareas
-
-Base de datos (PostgreSQL + Redis)
-
-Seguridad y autenticación
-
-📁 Estructura sugerida:
-
-Code
-/backend-core
-├── src/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-├── config/
-├── tests/
-├── README.md
+### Tech Stack
+- Node.js / Go / Python (FastAPI)
+- PostgreSQL + Redis
+- RESTful API / GraphQL
