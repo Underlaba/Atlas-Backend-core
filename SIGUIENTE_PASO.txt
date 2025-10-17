@@ -1,0 +1,64 @@
+# Instrucciones de Configuracion
+
+## Archivo .env Abierto en Notepad
+
+En el archivo .env que acaba de abrirse, reemplaza estas lineas:
+
+BUSCA:
+```
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+JWT_REFRESH_SECRET=your-super-secret-refresh-key-change-this-in-production
+```
+
+REEMPLAZA CON:
+```
+JWT_SECRET=7492defa20e5584a153b6baa8042d63e6e33c8667de26d05f4035ab90e73921985c094fcde08351281ca3cda78af1309210355f467fb88ac1a6c189d31a75bac
+JWT_REFRESH_SECRET=5df3cb6abf144baa5f814a33cfa4c6891a78d5f850525f4375b0d9ed7cef0495223de2d70537644fa390398cf38258039c81e1bd15f1633ff143770052d0e637
+```
+
+Guarda el archivo (Ctrl+S) y cierra Notepad.
+
+## Siguiente Paso: Instalar PostgreSQL
+
+Tienes 3 opciones:
+
+### Opcion 1: Instalar con el script automatico
+```powershell
+.\install-postgresql.ps1
+```
+
+### Opcion 2: Descargar manualmente
+Ve a: https://www.postgresql.org/download/windows/
+Ejecuta el instalador y anota la contraseña que elijas
+
+### Opcion 3: Usar PostgreSQL en la nube (mas rapido para probar)
+Crea una cuenta gratuita en:
+- https://www.elephantsql.com/ (PostgreSQL gratuito)
+- https://supabase.com/ (incluye PostgreSQL)
+
+Luego actualiza el archivo .env con las credenciales que te den.
+
+## Despues de instalar PostgreSQL
+
+1. Crear la base de datos:
+```powershell
+psql -U postgres -c "CREATE DATABASE atlas_db;"
+```
+
+2. Si usaste una contraseña diferente a "your_password_here", actualiza .env:
+```
+DB_PASSWORD=tu_contraseña_aqui
+```
+
+3. Ejecutar migraciones:
+```powershell
+npm run migrate
+```
+
+4. Iniciar el servidor:
+```powershell
+npm run dev
+```
+
+5. Probar la API:
+Abre en el navegador: http://localhost:3000/api/v1/health
