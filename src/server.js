@@ -15,8 +15,10 @@ const { errorHandler, notFound } = require('./middleware/error');
 // Initialize Express app
 const app = express();
 
-// Security middleware
-app.use(helmet());
+// Security middleware - Modified for Swagger UI
+app.use(helmet({
+  contentSecurityPolicy: false, // Desactivar CSP para Swagger UI
+}));
 app.use(cors(config.cors));
 
 // Rate limiting
