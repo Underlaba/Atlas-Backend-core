@@ -4,10 +4,12 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
+const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
 
 const config = require('./config');
 const routes = require('./routes');
+const swaggerSpec = require('./config/swagger');
 const { errorHandler, notFound } = require('./middleware/error');
 
 // Initialize Express app
@@ -38,15 +40,23 @@ if (config.server.env === 'development') {
 // API Routes
 app.use('/api/v1', routes);
 
+// Swagger Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'Atlas API Documentation',
+}));
+
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     success: true,
     message: 'Atlas Backend Core API',
     version: '1.0.0',
+    documentation: '/api-docs',
     endpoints: {
       health: '/api/v1/health',
       auth: '/api/v1/auth',
+      agents: '/api/v1/agents',
     },
   });
 });
