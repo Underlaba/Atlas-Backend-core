@@ -18,6 +18,7 @@ const app = express();
 // Security middleware - Modified for Swagger UI
 app.use(helmet({
   contentSecurityPolicy: false, // Desactivar CSP para Swagger UI
+  hsts: false, // Desactivar HSTS para permitir HTTP sin redirección forzada
 }));
 app.use(cors(config.cors));
 
