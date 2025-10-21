@@ -81,11 +81,26 @@ const login = async (req, res, next) => {
       });
     }
 
+    // DEBUG: Log user data
+    console.log('[LOGIN DEBUG] User from DB:', {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      hasRole: !!user.role,
+      roleType: typeof user.role
+    });
+
     // Generate tokens
     const accessToken = generateAccessToken({
       id: user.id,
       email: user.email,
       role: user.role,
+    });
+    
+    console.log('[LOGIN DEBUG] Token payload:', {
+      id: user.id,
+      email: user.email,
+      role: user.role
     });
 
     const refreshToken = generateRefreshToken({
