@@ -3,6 +3,7 @@ const router = express.Router();
 const agentController = require('../controllers/agentController');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const { validateAgentRegistration } = require('../middleware/validation');
+const { createLoggers } = require('../middleware/activityLogger');
 
 /**
  * @swagger
@@ -46,13 +47,11 @@ const { validateAgentRegistration } = require('../middleware/validation');
  *                   example: Agente registrado exitosamente
  *                 data:
  *                   $ref: '#/components/schemas/Agent'
- *       400:
- *         $ref: '#/components/responses/BadRequestError'
  *       500:
  *         $ref: '#/components/responses/ServerError'
  */
 // Ruta pública para registro de agentes
-router.post('/register', validateAgentRegistration, agentController.register);
+router.post('/register', validateAgentRegistration, agentController.register, createLoggers.agentCreated());
 
 /**
  * @swagger
@@ -142,7 +141,7 @@ router.get('/', authMiddleware, agentController.getAll);
  *       500:
  *         $ref: '#/components/responses/ServerError'
  */
-router.get('/:id', authMiddleware, agentController.getById);
+router.get('/:id', authMiddleware, agentController.getById, createLoggers.agentViewed());
 
 // Rutas protegidas para agentes (requieren JWT de agente)
 router.post('/assign-task', authMiddleware, agentController.assignTask);
@@ -204,7 +203,7 @@ router.post('/assign-task', authMiddleware, agentController.assignTask);
  *         $ref: '#/components/responses/ServerError'
  */
 // Rutas de administración (requieren rol admin)
-router.put('/:id/status', authMiddleware, checkRole('admin'), agentController.updateStatus);
+router.put('/:id/status', authMiddleware, checkRole('admin'), agentController.updateStatus, createLoggers.agentStatusChanged());
 
 /**
  * @swagger
@@ -246,6 +245,6 @@ router.put('/:id/status', authMiddleware, checkRole('admin'), agentController.up
  *       500:
  *         $ref: '#/components/responses/ServerError'
  */
-router.delete('/:id', authMiddleware, checkRole('admin'), agentController.delete);
+router.delete('/:id', authMiddleware, checkRole('admin'), agentController.delete, createLoggers.agentDeleted());
 
 module.exports = router;

@@ -4,6 +4,7 @@ const { body } = require('express-validator');
 const authController = require('../controllers/authController');
 const { authMiddleware } = require('../middleware/auth');
 const { validate } = require('../middleware/validation');
+const { createLoggers } = require('../middleware/activityLogger');
 
 // Validation rules
 const registerValidation = [
@@ -144,12 +145,11 @@ router.post('/register', registerValidation, validate, authController.register);
  *                       description: Token JWT de renovación
  *       400:
  *         $ref: '#/components/responses/BadRequestError'
- *       401:
- *         description: Credenciales inválidas
  *       500:
  *         $ref: '#/components/responses/ServerError'
  */
-router.post('/login', loginValidation, validate, authController.login);
+// Routes
+router.post('/login', loginValidation, validate, authController.login, createLoggers.login());
 
 /**
  * @swagger

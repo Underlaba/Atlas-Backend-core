@@ -4,6 +4,7 @@ const router = express.Router();
 // Import route modules
 const authRoutes = require('./auth');
 const agentRoutes = require('./agents');
+const logsRoutes = require('./logs');
 
 /**
  * @swagger
@@ -36,5 +37,6 @@ router.get('/health', (req, res) => {
 // Mount routes
 router.use('/auth', authRoutes);
 router.use('/agents', agentRoutes);
+router.use('/logs', logsRoutes);
 
 module.exports = router;

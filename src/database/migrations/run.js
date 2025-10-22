@@ -1,4 +1,5 @@
 const db = require('../../config/database');
+const createActivityLogsTable = require('./create-activity-logs-table');
 
 /**
  * Create users table
@@ -38,6 +39,7 @@ const runMigrations = async () => {
     console.log('🔄 Running database migrations...');
     
     await createUsersTable();
+    await createActivityLogsTable();
     
     console.log('✅ All migrations completed successfully');
     process.exit(0);
