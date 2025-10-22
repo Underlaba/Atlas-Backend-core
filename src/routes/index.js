@@ -5,6 +5,7 @@ const router = express.Router();
 const authRoutes = require('./auth');
 const agentRoutes = require('./agents');
 const logsRoutes = require('./logs');
+const usersRoutes = require('./users');
 
 /**
  * @swagger
@@ -38,5 +39,6 @@ router.get('/health', (req, res) => {
 router.use('/auth', authRoutes);
 router.use('/agents', agentRoutes);
 router.use('/logs', logsRoutes);
+router.use('/users', usersRoutes);
 
 module.exports = router;
