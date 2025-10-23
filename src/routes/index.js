@@ -7,6 +7,8 @@ const agentRoutes = require('./agents');
 const logsRoutes = require('./logs');
 const usersRoutes = require('./users');
 const settingsRoutes = require('./settings');
+const analyticsRoutes = require('./analytics');
+const tasksRoutes = require('./tasks');
 
 /**
  * @swagger
@@ -42,5 +44,7 @@ router.use('/agents', agentRoutes);
 router.use('/logs', logsRoutes);
 router.use('/users', usersRoutes);
 router.use('/settings', settingsRoutes);
+router.use('/analytics', analyticsRoutes);
+router.use('/tasks', tasksRoutes);
 
 module.exports = router;

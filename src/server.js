@@ -15,6 +15,9 @@ const { errorHandler, notFound } = require('./middleware/error');
 // Initialize Express app
 const app = express();
 
+// Trust proxy for rate limiting behind nginx
+app.set('trust proxy', true);
+
 // Security middleware - Modified for Swagger UI
 app.use(helmet({
   contentSecurityPolicy: false, // Desactivar CSP para Swagger UI
