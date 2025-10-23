@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -14,6 +16,21 @@ const { errorHandler, notFound } = require('./middleware/error');
 
 // Initialize Express app
 const app = express();
+
+// Create HTTP server
+const server = http.createServer(app);
+
+// Initialize Socket.IO
+const io = new Server(server, {
+  cors: {
+    origin: config.cors.origin,
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+});
+
+// Make io instance available globally
+global.io = io;
 
 // Trust proxy for rate limiting behind nginx
 app.set('trust proxy', true);
@@ -73,15 +90,32 @@ app.use(notFound);
 // Error handling middleware
 app.use(errorHandler);
 
+// WebSocket Connection Handler
+io.on('connection', (socket) => {
+  console.log('🔌 Client connected:', socket.id);
+
+  // Handle client disconnection
+  socket.on('disconnect', () => {
+    console.log('🔌 Client disconnected:', socket.id);
+  });
+
+  // Optional: Handle authentication
+  socket.on('authenticate', (token) => {
+    // TODO: Verify JWT token if needed
+    console.log('🔐 Client authenticated:', socket.id);
+  });
+});
+
 // Start server
 const PORT = config.server.port;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`
     🚀 Server is running!
     🔧 Environment: ${config.server.env}
     🌍 Port: ${PORT}
     📡 API: http://localhost:${PORT}/api/v1
+    🔌 WebSocket: Ready for connections
   `);
 });
 
@@ -91,4 +125,4 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-module.exports = app;
+module.exports = { app, io, server };

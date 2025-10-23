@@ -5,6 +5,13 @@
 
 const Task = require('../models/Task');
 const Agent = require('../models/Agent');
+const {
+  emitTaskCreated,
+  emitTaskUpdated,
+  emitTaskCompleted,
+  emitTaskDeleted,
+  emitTaskAssigned,
+} = require('../utils/websocket');
 
 /**
  * @swagger
@@ -227,6 +234,10 @@ exports.createTask = async (req, res, next) => {
 
     const task = await Task.create(taskData);
 
+    // Emit WebSocket event
+    emitTaskCreated(task);
+    emitTaskAssigned(agentWallet, task);
+
     res.status(201).json({
       success: true,
       message: 'Task created successfully',
@@ -280,6 +291,9 @@ exports.updateTask = async (req, res, next) => {
 
     const updatedTask = await Task.update(id, updates);
 
+    // Emit WebSocket event
+    emitTaskUpdated(updatedTask);
+
     res.json({
       success: true,
       message: 'Task updated successfully',
@@ -327,6 +341,9 @@ exports.startTask = async (req, res, next) => {
     }
 
     const updatedTask = await Task.markInProgress(id);
+
+    // Emit WebSocket event
+    emitTaskUpdated(updatedTask);
 
     res.json({
       success: true,
@@ -376,6 +393,9 @@ exports.completeTask = async (req, res, next) => {
 
     const updatedTask = await Task.markCompleted(id);
 
+    // Emit WebSocket event
+    emitTaskCompleted(updatedTask);
+
     res.json({
       success: true,
       message: 'Task completed successfully',
@@ -408,6 +428,9 @@ exports.deleteTask = async (req, res, next) => {
     }
 
     await Task.delete(id);
+
+    // Emit WebSocket event
+    emitTaskDeleted(id);
 
     res.json({
       success: true,
