@@ -17,7 +17,7 @@ class Task {
         t.*,
         a.device_id as agent_device_id,
         u.email as assigned_by_email,
-        u.name as assigned_by_name
+        CONCAT(u.first_name, ' ', u.last_name) as assigned_by_name
       FROM tasks t
       LEFT JOIN agents a ON t.agent_wallet = a.wallet_address
       LEFT JOIN users u ON t.assigned_by = u.id
@@ -85,7 +85,7 @@ class Task {
         t.*,
         a.device_id as agent_device_id,
         u.email as assigned_by_email,
-        u.name as assigned_by_name
+        CONCAT(u.first_name, ' ', u.last_name) as assigned_by_name
       FROM tasks t
       LEFT JOIN agents a ON t.agent_wallet = a.wallet_address
       LEFT JOIN users u ON t.assigned_by = u.id
