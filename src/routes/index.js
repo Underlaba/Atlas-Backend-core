@@ -6,6 +6,7 @@ const authRoutes = require('./auth');
 const agentRoutes = require('./agents');
 const logsRoutes = require('./logs');
 const usersRoutes = require('./users');
+const settingsRoutes = require('./settings');
 
 /**
  * @swagger
@@ -40,5 +41,6 @@ router.use('/auth', authRoutes);
 router.use('/agents', agentRoutes);
 router.use('/logs', logsRoutes);
 router.use('/users', usersRoutes);
+router.use('/settings', settingsRoutes);
 
 module.exports = router;

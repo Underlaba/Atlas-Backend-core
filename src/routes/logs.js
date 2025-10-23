@@ -66,7 +66,7 @@ const { createLoggers } = require('../middleware/activityLogger');
  *       403:
  *         description: Forbidden - Admin only
  */
-router.get('/', authMiddleware, checkRole(['admin']), logsController.getLogs, createLoggers.logsViewed());
+router.get('/', authMiddleware, checkRole('admin'), logsController.getLogs, createLoggers.logsViewed());
 
 /**
  * @swagger
@@ -116,7 +116,7 @@ router.get('/', authMiddleware, checkRole(['admin']), logsController.getLogs, cr
  *       401:
  *         description: Unauthorized
  */
-router.post('/', authMiddleware, checkRole(['admin']), logsController.createLog);
+router.post('/', authMiddleware, checkRole('admin'), logsController.createLog);
 
 /**
  * @swagger
@@ -163,7 +163,7 @@ router.post('/', authMiddleware, checkRole(['admin']), logsController.createLog)
  *       401:
  *         description: Unauthorized
  */
-router.get('/export', authMiddleware, checkRole(['admin']), logsController.exportLogs, createLoggers.logsExported());
+router.get('/export', authMiddleware, checkRole('admin'), logsController.exportLogs, createLoggers.logsExported());
 
 /**
  * @swagger
@@ -188,7 +188,7 @@ router.get('/export', authMiddleware, checkRole(['admin']), logsController.expor
  *       401:
  *         description: Unauthorized
  */
-router.get('/stats', authMiddleware, checkRole(['admin']), logsController.getStats);
+router.get('/stats', authMiddleware, checkRole('admin'), logsController.getStats);
 
 /**
  * @swagger
@@ -214,7 +214,7 @@ router.get('/stats', authMiddleware, checkRole(['admin']), logsController.getSta
  *       401:
  *         description: Unauthorized
  */
-router.get('/:id', authMiddleware, checkRole(['admin']), logsController.getLogById);
+router.get('/:id', authMiddleware, checkRole('admin'), logsController.getLogById);
 
 /**
  * @swagger
@@ -243,6 +243,6 @@ router.get('/:id', authMiddleware, checkRole(['admin']), logsController.getLogBy
  *       403:
  *         description: Forbidden - Admin only
  */
-router.delete('/', authMiddleware, checkRole(['admin']), logsController.deleteLogs);
+router.delete('/', authMiddleware, checkRole('admin'), logsController.deleteLogs);
 
 module.exports = router;

@@ -43,7 +43,7 @@ const { authMiddleware, checkRole } = require('../middleware/auth');
  *       403:
  *         description: Forbidden
  */
-router.get('/', authMiddleware, checkRole(['admin']), userController.getAllUsers);
+router.get('/', authMiddleware, checkRole('admin'), userController.getAllUsers);
 
 /**
  * @swagger
@@ -65,7 +65,7 @@ router.get('/', authMiddleware, checkRole(['admin']), userController.getAllUsers
  *       404:
  *         description: User not found
  */
-router.get('/:id', authMiddleware, checkRole(['admin']), userController.getUserById);
+router.get('/:id', authMiddleware, checkRole('admin'), userController.getUserById);
 
 /**
  * @swagger
@@ -106,7 +106,7 @@ router.get('/:id', authMiddleware, checkRole(['admin']), userController.getUserB
  *       400:
  *         description: Bad request
  */
-router.post('/', authMiddleware, checkRole(['admin']), userController.createUser);
+router.post('/', authMiddleware, checkRole('admin'), userController.createUser);
 
 /**
  * @swagger
@@ -147,7 +147,7 @@ router.post('/', authMiddleware, checkRole(['admin']), userController.createUser
  *       404:
  *         description: User not found
  */
-router.put('/:id', authMiddleware, checkRole(['admin']), userController.updateUser);
+router.put('/:id', authMiddleware, checkRole('admin'), userController.updateUser);
 
 /**
  * @swagger
@@ -169,7 +169,7 @@ router.put('/:id', authMiddleware, checkRole(['admin']), userController.updateUs
  *       404:
  *         description: User not found
  */
-router.delete('/:id', authMiddleware, checkRole(['admin']), userController.deleteUser);
+router.delete('/:id', authMiddleware, checkRole('admin'), userController.deleteUser);
 
 /**
  * @swagger
@@ -201,7 +201,7 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), userController.delet
  *       200:
  *         description: Role updated successfully
  */
-router.patch('/:id/role', authMiddleware, checkRole(['admin']), userController.updateUserRole);
+router.patch('/:id/role', authMiddleware, checkRole('admin'), userController.updateUserRole);
 
 /**
  * @swagger
@@ -221,7 +221,7 @@ router.patch('/:id/role', authMiddleware, checkRole(['admin']), userController.u
  *       200:
  *         description: Status toggled successfully
  */
-router.patch('/:id/toggle-status', authMiddleware, checkRole(['admin']), userController.toggleUserStatus);
+router.patch('/:id/toggle-status', authMiddleware, checkRole('admin'), userController.toggleUserStatus);
 
 /**
  * @swagger
@@ -242,7 +242,7 @@ router.patch('/:id/toggle-status', authMiddleware, checkRole(['admin']), userCon
  *       200:
  *         description: List of users with specified role
  */
-router.get('/role/:role', authMiddleware, checkRole(['admin']), userController.getUsersByRole);
+router.get('/role/:role', authMiddleware, checkRole('admin'), userController.getUsersByRole);
 
 /**
  * @swagger
@@ -256,6 +256,6 @@ router.get('/role/:role', authMiddleware, checkRole(['admin']), userController.g
  *       200:
  *         description: List of active users
  */
-router.get('/active/all', authMiddleware, checkRole(['admin']), userController.getActiveUsers);
+router.get('/active/all', authMiddleware, checkRole('admin'), userController.getActiveUsers);
 
 module.exports = router;

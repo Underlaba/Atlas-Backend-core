@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const db = require('../config/database');
 
 /**
  * Get all users
@@ -35,7 +36,7 @@ exports.getAllUsers = async (req, res, next) => {
 
     query += ' ORDER BY created_at DESC';
 
-    const result = await User.query(query, params);
+    const result = await db.query(query, params);
 
     res.json({
       success: true,
@@ -280,7 +281,7 @@ exports.getUsersByRole = async (req, res, next) => {
     const { role } = req.params;
 
     const query = 'SELECT id, email, first_name, last_name, role, is_active, created_at FROM users WHERE role = $1 ORDER BY created_at DESC';
-    const result = await User.query(query, [role]);
+    const result = await db.query(query, [role]);
 
     res.json({
       success: true,
@@ -298,7 +299,7 @@ exports.getUsersByRole = async (req, res, next) => {
 exports.getActiveUsers = async (req, res, next) => {
   try {
     const query = 'SELECT id, email, first_name, last_name, role, created_at FROM users WHERE is_active = true ORDER BY created_at DESC';
-    const result = await User.query(query);
+    const result = await db.query(query);
 
     res.json({
       success: true,
