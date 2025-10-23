@@ -25,10 +25,9 @@ app.use(helmet({
 }));
 app.use(cors(config.cors));
 
-// Rate limiting - Temporarily disabled to fix trust proxy issue
-// TODO: Re-enable after fixing nginx configuration
-// const limiter = rateLimit(config.rateLimit);
-// app.use('/api/', limiter);
+// Rate limiting
+const limiter = rateLimit(config.rateLimit);
+app.use('/api/', limiter);
 
 // Body parsing middleware
 app.use(express.json());
