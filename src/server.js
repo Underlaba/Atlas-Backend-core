@@ -42,8 +42,8 @@ app.use(helmet({
 }));
 app.use(cors(config.cors));
 
-// Rate limiting - Only in development to avoid trust proxy issues
-if (config.server.env === 'development') {
+// Rate limiting - Only if enabled (development mode)
+if (config.rateLimit.enabled) {
   const limiter = rateLimit(config.rateLimit);
   app.use('/api/', limiter);
 }

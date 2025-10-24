@@ -30,15 +30,14 @@ module.exports = {
     credentials: true,
   },
 
-  // Rate Limiting
+  // Rate Limiting (solo en desarrollo, Nginx maneja esto en producción)
   rateLimit: {
+    enabled: process.env.NODE_ENV === 'development',
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
-    standardHeaders: 'draft-7',
+    standardHeaders: true,
     legacyHeaders: false,
     // Skip rate limiting for Socket.IO
     skip: (req) => req.url.startsWith('/socket.io'),
-    // Disable trust proxy validation to avoid errors
-    validate: { trustProxy: false },
   },
 };
