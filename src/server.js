@@ -33,7 +33,7 @@ const io = new Server(server, {
 global.io = io;
 
 // Trust proxy for rate limiting behind nginx
-app.set('trust proxy', true);
+app.set('trust proxy', 1); // Trust first proxy
 
 // Security middleware - Modified for Swagger UI
 app.use(helmet({

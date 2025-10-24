@@ -34,6 +34,9 @@ module.exports = {
   rateLimit: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
-    trustProxy: true, // Trust X-Forwarded-For header from nginx
+    standardHeaders: true,
+    legacyHeaders: false,
+    // Skip rate limiting for Socket.IO
+    skip: (req) => req.url.startsWith('/socket.io'),
   },
 };
