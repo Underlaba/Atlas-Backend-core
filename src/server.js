@@ -42,9 +42,11 @@ app.use(helmet({
 }));
 app.use(cors(config.cors));
 
-// Rate limiting
-const limiter = rateLimit(config.rateLimit);
-app.use('/api/', limiter);
+// Rate limiting - Only in development to avoid trust proxy issues
+if (config.server.env === 'development') {
+  const limiter = rateLimit(config.rateLimit);
+  app.use('/api/', limiter);
+}
 
 // Body parsing middleware
 app.use(express.json());
